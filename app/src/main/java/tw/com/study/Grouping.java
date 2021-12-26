@@ -1,9 +1,7 @@
 package tw.com.study;
 
-import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Grouping {
 
@@ -15,23 +13,23 @@ public class Grouping {
         List<Integer> convertedGroupB = Arrays.stream(groupB).map(Integer::parseInt).collect(Collectors.toList());
         List<Integer> upperBound = convertedGroupA.stream().map(num->num=num+diff).collect(Collectors.toList());
         List<Integer> lowerBound = convertedGroupA.stream().map(num->num=num-diff).collect(Collectors.toList());
-        System.out.println(convertedGroupA);
-        System.out.println(convertedGroupB);
-        System.out.println(upperBound);
-        System.out.println(lowerBound);
         int result=0;
         List<Integer> alreadyGrouped =new ArrayList<>();
         for(Integer num : convertedGroupB){
             for (int i = 0; i < lowerBound.size(); i++) {
                 if(num >= lowerBound.get(i) && num <= upperBound.get(i)){
-                    if(!alreadyGrouped.contains(num)){
-                        alreadyGrouped.add(num);
-                        result++;
-                    }
+                    result = addOneToGroupedNumIfPairNotGrouped(result, alreadyGrouped, num);
                 }
             }
         }
-        System.out.println(result);
-        return 3;
+        return result;
+    }
+
+    private int addOneToGroupedNumIfPairNotGrouped(int result, List<Integer> alreadyGrouped, Integer num) {
+        if(!alreadyGrouped.contains(num)){
+            alreadyGrouped.add(num);
+            result++;
+        }
+        return result;
     }
 }
