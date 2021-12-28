@@ -33,12 +33,18 @@ public class Grouping {
         }
         return result;
     }
-    public int group(int[] arrayA, int[] arrayB, int kValue) {
+    public int group(int[] arrayA, int[] arrayB, int kValue,int numA,int numB) {
         if (arrayA.length == 0 || arrayB.length == 0)
             return 0;
-        if (Math.abs(arrayA[0] - arrayB[0]) <= kValue) {
-            return 1;
+        int[] comparedGroup = numA>numB? arrayB:arrayA;//{6}
+        int[] compareToGroup = numA>numB? arrayA:arrayB;//{3，7}
+//        int range = Math.max(numA, numB);//{3,7}
+        for (int j : compareToGroup) {
+            if (Math.abs(comparedGroup[0] - j) <= kValue) {
+                return 1;
+            }
         }
+
         return 0;
     }
 }
