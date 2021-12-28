@@ -33,18 +33,24 @@ public class Grouping {
         }
         return result;
     }
+
     public int group(int[] arrayA, int[] arrayB, int kValue,int numA,int numB) {
-        if (arrayA.length == 0 || arrayB.length == 0)
+        if (arrayA.length == 0 || arrayB.length == 0) {
             return 0;
-        int[] comparedGroup = numA>numB? arrayB:arrayA;//{6}
-        int[] compareToGroup = numA>numB? arrayA:arrayB;//{3，7}
-//        int range = Math.max(numA, numB);//{3,7}
-        for (int j : compareToGroup) {
-            if (Math.abs(comparedGroup[0] - j) <= kValue) {
-                return 1;
+        }
+        int[] comparedGroup = numA>numB? arrayB:arrayA;//{1,10,20,26}
+        int[] compareToGroup = numA>numB? arrayA:arrayB;//{2,7,14,23,100}
+        int[] upperBound = Arrays.stream(compareToGroup).map(num -> num=num+kValue).toArray();
+        int[] lowerBound = Arrays.stream(compareToGroup).map(num -> num=num-kValue).toArray();
+        int pairNumber = 0;
+        List<Integer> alreadyGrouped =new ArrayList<>();
+        for(Integer num : comparedGroup){
+            for (int i = 0; i < lowerBound.length; i++) {
+                if(num >= lowerBound[i] && num <= upperBound[i]){
+                    pairNumber = addOneToGroupedNumIfPairNotGrouped(pairNumber, alreadyGrouped, compareToGroup[i]);
+                }
             }
         }
-
-        return 0;
+        return pairNumber;
     }
 }
