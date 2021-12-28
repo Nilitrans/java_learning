@@ -1,6 +1,7 @@
 package tw.com.study;
 
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 public class Grouping {
@@ -31,5 +32,13 @@ public class Grouping {
             result++;
         }
         return result;
+    }
+    public int group(int[] arrayA, int[] arrayB, int kValue) {
+        if (arrayA.length == 0 || arrayB.length == 0)
+            return 0;
+        if (Math.abs(arrayA[0] - arrayB[0]) <= kValue) {
+            return 1;
+        }
+        return 0;
     }
 }
